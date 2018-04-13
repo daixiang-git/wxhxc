@@ -1,0 +1,7 @@
+<image class="logo" src="{{userInfo.avatarUrl}}"></image>
+<button bindtap="getOpenIdTap">获取用户唯一标识openid</button>  
+openid:{{openid}}session_key:{{session_key}}
+
+
+<button bindtap="getCodeTap">获取CODE</button>  
+code:{{code}}
