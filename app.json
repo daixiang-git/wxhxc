@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/login/login",
     "pages/index/index",
+    "pages/login/login",
     "pages/logs/logs",
     "pages/test/test"
   ],
@@ -18,12 +18,6 @@
     "backgroundColor": "#fff",
     "box-shadow": "0 0 6px 0",
     "list": [
-      {
-        "pagePath": "pages/login/login",
-        "iconPath": "images/nav/my-off.png",
-        "selectedIconPath": "images/nav/my-on.png",
-        "text": "绑定页面"
-      },
       {
         "pagePath": "pages/index/index",
         "iconPath": "images/nav/home-off.png",

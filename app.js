@@ -1,3 +1,5 @@
+const API = require('./api/mock.js')
+
 //app.js
 App({
   onLaunch: function () {
@@ -9,7 +11,9 @@ App({
     // 登录
     wx.login({
       success: res => {
+        console.log(res.code)
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        this.globalData.uid = res.code;
       }
     })
     // 获取用户信息
@@ -21,7 +25,21 @@ App({
             success: res => {
               // 可以将 res 发送给后台解码出 unionId
               this.globalData.userInfo = res.userInfo
-
+              API.getAuth({
+                params: {},
+                success: res => {
+                  if(res.data) {
+                    
+                  } else {
+                    wx.navigateTo({
+                      url: '/pages/login/login',
+                    })
+                  }
+                },
+                fail: e => {
+                  console.log('err', e);
+                }
+              })
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
               // 所以此处加入 callback 以防止这种情况
               if (this.userInfoReadyCallback) {

@@ -1,10 +1,17 @@
+const API = require('../../api/mock.js')
 var CODE = ''
 Page({
   data: {
+    realName:'',
     userName: '',
     password: ''
   },
-
+  //获取真实姓名
+  realNameInput: function(e) {
+    this.setData({
+      realName: e.detail.value
+    })
+  },
   // 获取输入账号 
   userNameInput: function (e) {
     this.setData({
@@ -21,41 +28,26 @@ Page({
 
   // 登录 
   login: function () {
-    if (this.data.userName.length == 0 || this.data.password.length == 0) {
+    if (this.data.realName.length == 0 || this.data.userName.length == 0 || this.data.password.length == 0) {
       wx.showToast({
-        title: '用户名和密码不能为空',
+        title: '输入不能为空',
         icon: 'loading',
         duration: 2000
       })
     } else {
-      wx.login({
-        success: function (res) {
-          CODE = res.code;//code  
-          console.log(CODE)
-        }
-      })
-      wx.request({
-        url: 'https://api.zc.com/wechat/bindUser',
-        data: {
-          code:CODE,
+      API.bindUser({
+        params: {
+          realName: this.data.realName,
           userName: this.data.userName,
           password: this.data.password
         },
-        success: function (res) {
-          if (res.data.status == 1) {
-            wx.showToast({
-              title: '登录成功',
-              icon: 'success',
-              duration: 2000
-            })
-          } else {
-            wx.showModal({
-              title: '错误',
-              content: ''
-            })
-          }
+        success: res => {
+          wx.switchTab({
+            url: '/pages/index/index',
+          })
         }
       })
+      
     }
   }
 })

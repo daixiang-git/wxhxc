@@ -2,6 +2,8 @@
 //获取应用实例
 const app = getApp()
 
+const API = require('../../api/mock.js')
+
 Page({
   data: {
     motto: 'Hello World',
@@ -42,13 +44,23 @@ Page({
         }
       })
     }
+    this.getIndexData()
   },
   getUserInfo: function(e) {
-    console.log(e)
     app.globalData.userInfo = e.detail.userInfo
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
+    })
+  },
+  getIndexData: function() {
+    API.getIndexData({
+      success: res => {
+        console.log(res)
+      },
+      fail: e => {
+        console.log(e);
+      }
     })
   }
 })
