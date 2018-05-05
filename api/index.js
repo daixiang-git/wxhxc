@@ -1,5 +1,20 @@
 
-const API_HOST = '';
+const API_HOST = 'https://www.coachhu.com/wxhxc';
+
+let globalData = {};
+
+export function initGlobalData(data) {
+  globalData = data;
+}
+
+export function showGlobalData() {
+  console.log(globalData);
+}
+
+export function setData(key, value) {
+  globalData[key] = value;
+}
+
 
 //鉴权
 const AUTH_PATH = '/api/v1/wx/auth'
@@ -7,10 +22,10 @@ const AUTH_PATH = '/api/v1/wx/auth'
 export function getAuth(config = {}) {
   wx.request({
     url: API_HOST + AUTH_PATH,
-    data,
+    data: config.params,
     method: 'GET',
     success: function(res) {
-      config.success && config.success(res)
+      config.success && config.success(res.data)
     },
     fail: function(e) {
       config.fail && config.fail(e);
@@ -22,15 +37,17 @@ export function getAuth(config = {}) {
 }
 
 //首页数据
-const INDEX_DATA_PATH = '/api/v1/wx/index'
+const INDEX_DATA_PATH = '/api/v1/wx/test'
 
-export function getIndexData(config = {}, data={}) {
+export function getIndexData(config = {}) {
+  let header = _getHeaderIds();
   wx.request({
     url: API_HOST + INDEX_DATA_PATH,
-    data,
+    header,
+    data: config.params,
     method: 'GET',
     success: function (res) {
-      config.success && config.success(res)
+      config.success && config.success(res.data)
     },
     fail: function (e) {
       config.fail && config.fail(e);
@@ -39,4 +56,34 @@ export function getIndexData(config = {}, data={}) {
       config.complete && config.complete(data);
     }
   })
+}
+
+//用户绑定
+const USER_BIND_PATH = '/user/binding'
+export function bindUser(config = {}) {
+  let header = _getHeaderIds();
+  wx.request({
+    url: API_HOST + USER_BIND_PATH,
+    header,
+    data: config.params,
+    method: 'POST',
+    success: function (res) {
+      config.success && config.success(res.data)
+    },
+    fail: function (e) {
+      config.fail && config.fail(e);
+    },
+    complete: function (data) {
+      config.complete && config.complete(data);
+    }
+  })
+}
+
+function _getHeaderIds() {
+  let h = {}
+  if(globalData.sessionId) {
+    h.sessionId = globalData.sessionId;
+    h.openId = globalData.openId;
+  }
+  return h;
 }

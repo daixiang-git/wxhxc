@@ -1,10 +1,10 @@
-const API = require('../../api/mock.js')
+const API = require('../../api/index.js')
 var CODE = ''
 Page({
   data: {
-    realName:'',
-    userName: '',
-    password: ''
+    realName:'庞聪',
+    userName: '15280901938',
+    password: '19951115abcd'
   },
   //获取真实姓名
   realNameInput: function(e) {
@@ -37,14 +37,18 @@ Page({
     } else {
       API.bindUser({
         params: {
-          realName: this.data.realName,
-          userName: this.data.userName,
-          password: this.data.password
+          userName: this.data.realName,
+          hxcName: this.data.userName,
+          hxcPaw: this.data.password
         },
-        success: res => {
-          wx.switchTab({
-            url: '/pages/index/index',
-          })
+        success: data => {
+          console.log(data)
+          // wx.switchTab({
+          //   url: '/pages/index/index',
+          // })
+        },
+        fail: e => {
+          console.log('err', e)
         }
       })
       

@@ -2,7 +2,8 @@
 //获取应用实例
 const app = getApp()
 
-const API = require('../../api/mock.js')
+
+const API = require('../../api/index.js')
 
 Page({
   data: {
@@ -44,7 +45,8 @@ Page({
         }
       })
     }
-    this.getIndexData()
+    app.userAuth(this.getIndexData);
+    
   },
   getUserInfo: function(e) {
     app.globalData.userInfo = e.detail.userInfo
@@ -55,8 +57,14 @@ Page({
   },
   getIndexData: function() {
     API.getIndexData({
-      success: res => {
-        console.log(res)
+      success: data => {
+        if (!data.success && data.message === 'not binding!') {
+          wx.navigateTo({
+            url: '/pages/login/login',
+          })
+        } else {
+
+        } 
       },
       fail: e => {
         console.log(e);
