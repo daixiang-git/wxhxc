@@ -1,0 +1,20 @@
+<view class='order-container' wx:if="{{list.length > 0}}" bindtap="toOrderEdit">
+  <view class="tips">点击卡片进入编辑</view>
+  <view class='order-group' wx:for="{{list}}">
+    <view class='order-group-block' data-index="{{index}}"></view>
+    <view class='og-teacher clearfix'>
+      <label>教练名：</label>
+      <text>{{item.teacherName}}</text>
+    </view>
+    <view class='og-class clearfix'>
+      <label>预约课时：</label>
+      <text>{{item.classHour}}</text>
+    </view>
+    <view class='og-date clearfix'>
+      <label>预约日期：</label>
+      <text>{{item.orderData}}</text>
+    </view>
+    <text class='look-log' bindtap='lookLog' data-id="{{item.id}}">查看日志</text>
+  </view>
+</view>
+<view class='order-container' wx:else>当前0条预约</view>

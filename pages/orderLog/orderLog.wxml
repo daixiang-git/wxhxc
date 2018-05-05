@@ -1,0 +1,26 @@
+<view class='order-container' wx:if="{{list.length > 0}}">
+<scroll-view scroll-y="true" bindscrolltolower="searchScrollLower">  
+  <view class='order-group' wx:for="{{list}}">
+    <view class='order-group-block' data-index="{{index}}"></view>
+    <view class='og-teacher clearfix'>
+      <label>教练名：</label>
+      <text>{{item.teacherName}}</text>
+    </view>
+    <view class='og-date clearfix'>
+      <label>预约课时：</label>
+      <text>{{item.classTime}}</text>
+    </view>
+    <view class='og-date clearfix'>
+      <label>预约状态：</label>
+      <text>{{item.orderText}}</text>
+    </view>
+    <view class='og-date clearfix' wx:if="{{!item.orderState}}">
+      <label>失败原因：</label>
+      <text>{{item.content}}</text>
+    </view>
+  </view>
+  <view class="loading" hidden="{{!searchLoading}}">正在载入更多...</view>  
+  <view class="loading complete" hidden="{{!searchLoadingComplete}}">已加载全部</view>  
+</scroll-view>
+</view>
+<view class='order-container' wx:else>当前0条预约日志</view>

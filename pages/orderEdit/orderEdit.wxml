@@ -1,0 +1,42 @@
+<view class="edit-container">
+  <view class='edit-header'>
+    <text class='delete-btn'>删除</text>
+    <text class='save-btn'>保存</text>
+  </view>
+  <view class='edit-group clearfix'>
+    <label>教练名：</label>
+    <picker>
+      <view>{{initData.teacherName}}</view>
+    </picker>
+  </view>
+  <view class='edit-group clearfix'>
+    <label>预约课时</label>
+    <picker value='{{classActive}}' range='{{classHours}}' bindchange="changeClass">
+      <view>{{classHours[classActive]}}</view>
+    </picker>
+  </view>
+  <view class='edit-group clearfix'>
+    <label>预约日期</label>
+    <view class='date-choose' wx:if="{{dateText}}" bindtap='openDatePanel'>{{dateText}}</view>
+    <view class='date-choose' wx:else bindtap='openDatePanel'>请选择日期</view>
+  </view>
+  <view class='edit-group clearfix'>
+    <label>自动评论</label>
+    <switch checked='{{autoComment}}' bindchange='changeAuto'></switch>
+    <textarea class="comment-area {{autoComment?'':'comment-area-hidden'}}" value="{{comment}}" placeholder='请输入自动评论内容...'></textarea>
+  </view>
+  <view class="dates-panel {{showDatePanel ? 'dates-panel-show': 'dates-panel-hidden'}}">
+    <view class='dates-panel-wrap'>
+      <view class='dates-btn-wrap'>
+        <text class='close-btn' bindtap='closeDatePanel'>关闭</text>
+        <text class='confirm-btn' bindtap="confirmDate">确定</text>
+      </view>
+      <checkbox-group class='checkbox-group' bindchange="checkboxChange">
+        <label class="checkbox" wx:for="{{dates}}">
+          <text class='checkbox-text'>{{item.value}}</text>
+          <checkbox class='checkbox-item' value="{{item.value}}" checked="{{item.checked}}"/>
+        </label>
+      </checkbox-group>
+    </view>
+  </view>
+</view>

@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/login/login",
     "pages/logs/logs",
-    "pages/test/test"
+    "pages/order/order",
+    "pages/orderEdit/orderEdit",
+    "pages/orderLog/orderLog"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -25,10 +27,10 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/test/test",
+        "pagePath": "pages/order/order",
         "iconPath": "images/nav/my-off.png",
         "selectedIconPath": "images/nav/my-on.png",
-        "text": "test"
+        "text": "我的预约"
       }
     ]
   }

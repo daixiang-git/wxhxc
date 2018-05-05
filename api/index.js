@@ -79,6 +79,49 @@ export function bindUser(config = {}) {
   })
 }
 
+//预约列表
+const GET_ORDER_LIST = '/user/list/task'
+export function getOrderList(config={}) {
+  let header = _getHeaderIds();
+  wx.request({
+    url: API_HOST + GET_ORDER_LIST,
+    header,
+    method: 'GET',
+    success: function (res) {
+      config.success && config.success(res.data)
+    },
+    fail: function (e) {
+      config.fail && config.fail(e);
+    },
+    complete: function (data) {
+      config.complete && config.complete(data);
+    }
+  })
+}
+
+//获取预约日志
+const GET_ORDER_LOG = '/user/order/log'
+
+export function getOrderLog(config = {}) {
+  let header = _getHeaderIds();
+  wx.request({
+    url: API_HOST + GET_ORDER_LOG,
+    header,
+    data: config.params,
+    method: 'GET',
+    success: function (res) {
+      config.success && config.success(res.data)
+    },
+    fail: function (e) {
+      config.fail && config.fail(e);
+    },
+    complete: function (data) {
+      config.complete && config.complete(data);
+    }
+  })
+}
+
+
 function _getHeaderIds() {
   let h = {}
   if(globalData.sessionId) {

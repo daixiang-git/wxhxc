@@ -1,42 +1,30 @@
-/**index.wxss**/
-.container{
-  width: 100%;
+/* pages/orderEdit/orderEdit.wxss */
+
+.edit-header{
+  line-height: 40px;
+  background: #384150;
+  color: #fff;
+  padding: 0 20px;
+}
+.save-btn{
+  float: right;
+}
+.edit-group{
   padding: 20px;
-}
-.form-group{
-  width: 100%;
-  line-height: 26px;
-  margin-bottom: 30px;
-}
-.fg-label{
-  float: left;
   line-height: 30px;
-  width: 90px;
+}
+.edit-group label{
+  float: left;
+  width: 80px;
   margin-right: 20px;
 }
-.add-coach-input{
+picker{
   float: left;
-  width: 120px;
-  height: 30px;
-  padding-left: 10px;
-  box-sizing: border-box;
-}
-.add-coach-btn{
-  float: left;
-  margin-left: 20px;
-  height: 30px;
-  line-height: 30px!important;
 }
 .date-choose{
-  float:left;
-  width:200px;
   overflow:hidden;
   white-space:nowrap;
   text-overflow:ellipsis;
-}
-input{
-  border: 1px solid #eee;
-  border-radius: 3px;
 }
 .dates-panel{
   position: absolute;
@@ -84,13 +72,19 @@ input{
   float: right;
 }
 .comment-area{
+    display: block;
+    width: 100%;
     border: 1px solid #eee;
     margin-top: 20px;
     color: #666;
-    text-indent: 5px;
+    padding: 2px 5px;
     box-sizing: border-box;
-    width: 100%;
 }
 .comment-area-hidden{
   display: none;
+}
+.clearfix::after{
+  content: "";
+  display: table;
+  clear: both;
 }

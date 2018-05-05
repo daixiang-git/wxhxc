@@ -18,7 +18,13 @@
   <input class="inputText" bindinput="userNameInput" /> 
  </view> 
  <view class="line"></view> 
-  
+ <!--密码-->
+ <view class="inputView"> 
+  <image class="keyImage" src="../../images/name.png"></image> 
+  <label class="loginLab">邮箱</label> 
+  <input class="inputText" bindinput="emailInput" /> 
+ </view> 
+  <view class="line"></view> 
  <!--密码-->
  <view class="inputView"> 
   <image class="keyImage" src="../../images/key.png"></image> 

@@ -9,6 +9,16 @@ Page({
   data: {
     motto: 'Hello World',
     userInfo: {},
+    classHour: ['08:00-10:00', '10:00-12:00', '14:00-16:00', '16:00-18:00'],
+    classActive: 0,
+    dates: [],
+    chooseDates: [],
+    datesText: '',
+    showDatePanel: false,
+    coachs: [],
+    coachActive: 0,
+    autoComment: false,
+    comment: '',
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
@@ -18,7 +28,55 @@ Page({
       url: '../logs/logs'
     })
   },
+  changeClass: function(e) {
+    this.setData({
+      classActive: e.detail.value
+    })
+  },
+  checkboxChange: function (e) {
+    this.setData({
+      chooseDates: e.detail.value
+    })
+  },
+  getDate: function() {
+    let nowDateTime = new Date().getTime();
+    let dates = []
+
+    for(let i=0; i < 7; i++) {
+      dates.push({value: getFormatDate(nowDateTime + 1000*60*60*24*i)})
+    }
+    this.setData({
+      dates: dates
+    })
+    function getFormatDate(time) {
+      let date = new Date(time);
+      return `${date.getFullYear()}-${date.getMonth()+1}-${date.getDate()}`
+    }
+  },
+  openDatePanel: function() {
+    this.setData({
+      showDatePanel: true
+    })
+  },
+  closeDatePanel: function() {
+    this.setData({
+      showDatePanel: false
+    })
+  },
+  confirmDate: function() {
+    console.log(this.data)
+    this.setData({
+      showDatePanel: false,
+      datesText: this.data.chooseDates.join(', ')
+    })
+  },
+  changeAuto: function (e) {
+    this.setData({
+      autoComment: e.detail.value
+    })
+  },
   onLoad: function () {
+    this.getDate()
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

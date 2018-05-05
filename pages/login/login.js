@@ -4,7 +4,8 @@ Page({
   data: {
     realName:'庞聪',
     userName: '15280901938',
-    password: '19951115abcd'
+    password: '19951115abcd',
+    email: ''
   },
   //获取真实姓名
   realNameInput: function(e) {
@@ -25,6 +26,12 @@ Page({
       password: e.detail.value
     })
   },
+  // 获取输入邮箱 
+  passwordInput: function (e) {
+    this.setData({
+      email: e.detail.value
+    })
+  },
 
   // 登录 
   login: function () {
@@ -39,7 +46,8 @@ Page({
         params: {
           userName: this.data.realName,
           hxcName: this.data.userName,
-          hxcPaw: this.data.password
+          hxcPaw: this.data.password,
+          email: this.data.email
         },
         success: data => {
           console.log(data)
