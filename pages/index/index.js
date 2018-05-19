@@ -15,6 +15,7 @@ Page({
     chooseDates: [],
     datesText: '',
     showDatePanel: false,
+    coachName: '',
     coachs: [],
     coachActive: 0,
     autoComment: false,
@@ -22,10 +23,18 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
   },
+  onReady:function() {
+    this.getTeacherList()
+  }, 
   //事件处理函数
   bindViewTap: function() {
     wx.navigateTo({
       url: '../logs/logs'
+    })
+  },
+  coachInput: function(e) {
+    this.setData({
+      coachName: e.detail.value
     })
   },
   changeClass: function(e) {
@@ -103,8 +112,6 @@ Page({
         }
       })
     }
-    app.userAuth(this.getIndexData);
-    
   },
   getUserInfo: function(e) {
     app.globalData.userInfo = e.detail.userInfo
@@ -113,19 +120,38 @@ Page({
       hasUserInfo: true
     })
   },
-  getIndexData: function() {
-    API.getIndexData({
+  getTeacherList: function() {
+    API.getTeacherList({
       success: data => {
-        if (!data.success && data.message === 'not binding!') {
-          wx.navigateTo({
-            url: '/pages/login/login',
-          })
-        } else {
-
-        } 
+        console.log(data);
       },
       fail: e => {
-        console.log(e);
+
+      }
+    })
+  },
+  addCoach:function() {
+    console.log(this.data.coachName)
+    if(!this.data.coachName) {
+      return;
+    }
+    API.addTeacher({
+      params: {
+        teacherName: this.data.coachName
+      },
+      success: data => {
+        if(data.success) {
+          wx.showToast({
+            title: '教练绑定成功',
+            icon: 'success'
+          })
+        }
+      },
+      fail: e => {
+        wx.showToast({
+          title: '教练绑定失败',
+          icon: 'none'
+        })
       }
     })
   }

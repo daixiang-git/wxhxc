@@ -2,8 +2,8 @@
 <view class="container">
   <view class='form-group'>
     <label class='fg-label'>添加教练</label>
-    <input class='add-coach-input'type="text"></input>
-    <button class='add-coach-btn' size="mini" type='primary'>绑定</button>
+    <input class='add-coach-input'type="text" bindinput='coachInput'></input>
+    <button bindtap='addCoach' class='add-coach-btn' size="mini" type='primary'>绑定</button>
   </view>
   <view class='form-group'>
     <label class='fg-label'>课时</label>

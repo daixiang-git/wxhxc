@@ -121,6 +121,68 @@ export function getOrderLog(config = {}) {
   })
 }
 
+//添加教练
+const ADD_TEACHER="/user/auth/teacher"
+export function addTeacher(config = {}) {
+  let header = _getHeaderIds();
+  wx.request({
+    url: API_HOST + ADD_TEACHER,
+    header,
+    data: config.params,
+    method: 'POST',
+    success: function (res) {
+      config.success && config.success(res.data)
+    },
+    fail: function (e) {
+      config.fail && config.fail(e);
+    },
+    complete: function (data) {
+      config.complete && config.complete(data);
+    }
+  })
+}
+//获取教练列表
+const GET_TEACHERS = '/user/list/teacher'
+export function getTeacherList(config = {}) {
+  let header = _getHeaderIds();
+  wx.request({
+    url: API_HOST + GET_TEACHERS,
+    header,
+    data: config.params,
+    method: 'GET',
+    success: function (res) {
+      config.success && config.success(res.data)
+    },
+    fail: function (e) {
+      config.fail && config.fail(e);
+    },
+    complete: function (data) {
+      config.complete && config.complete(data);
+    }
+  })
+}
+
+//提交
+const ADD_UPDATE_TASK='/user/edit/task'
+export function addTask(config = {}) {
+  let header = _getHeaderIds();
+  wx.request({
+    url: API_HOST + ADD_TEACHER,
+    header,
+    data: config.params,
+    method: 'POST',
+    success: function (res) {
+      config.success && config.success(res.data)
+    },
+    fail: function (e) {
+      config.fail && config.fail(e);
+    },
+    complete: function (data) {
+      config.complete && config.complete(data);
+    }
+  })
+}
+
 
 function _getHeaderIds() {
   let h = {}

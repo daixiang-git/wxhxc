@@ -9,7 +9,7 @@ App({
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
-    
+    this.userAuth(this.getIndexData);
     // 获取用户信息
     wx.getSetting({
       success: res => {
@@ -28,6 +28,24 @@ App({
             }
           })
         }
+      }
+    })
+  },
+  getIndexData: function () {
+    API.getIndexData({
+      success: data => {
+        if (!data.success && data.message === 'not binding!') {
+          // wx.navigateTo({
+          //   url: '/pages/login/login',
+          // })
+        } else {
+          wx.switchTab({
+            url: '/pages/index/index',
+          })
+        }
+      },
+      fail: e => {
+        console.log(e);
       }
     })
   },
