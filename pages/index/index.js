@@ -16,7 +16,7 @@ Page({
     datesText: '',
     showDatePanel: false,
     coachName: '',
-    coachs: [],
+    coaches: [],
     coachActive: 0,
     autoComment: false,
     comment: '',
@@ -26,20 +26,24 @@ Page({
   onReady:function() {
     this.getTeacherList()
   }, 
-  //事件处理函数
-  bindViewTap: function() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
-  },
   coachInput: function(e) {
     this.setData({
       coachName: e.detail.value
     })
   },
+  commentInput: function(e) {
+    this.setData({
+      comment: e.detail.value
+    })
+  },
   changeClass: function(e) {
     this.setData({
       classActive: e.detail.value
+    })
+  },
+  changeCoach: function(e) {
+    this.setData({
+      coachActive: e.detail.value
     })
   },
   checkboxChange: function (e) {
@@ -73,7 +77,6 @@ Page({
     })
   },
   confirmDate: function() {
-    console.log(this.data)
     this.setData({
       showDatePanel: false,
       datesText: this.data.chooseDates.join(', ')
@@ -123,7 +126,15 @@ Page({
   getTeacherList: function() {
     API.getTeacherList({
       success: data => {
-        console.log(data);
+        let c = [];
+        data.data.forEach(item => {
+          c.push([item.teacherName, item.teacherCode])
+        })
+        this.setData({
+          coaches: c,
+          coachActive: 0
+        })
+        console.log(this.data.coaches)
       },
       fail: e => {
 
@@ -131,7 +142,6 @@ Page({
     })
   },
   addCoach:function() {
-    console.log(this.data.coachName)
     if(!this.data.coachName) {
       return;
     }
@@ -145,6 +155,7 @@ Page({
             title: '教练绑定成功',
             icon: 'success'
           })
+          this.getTeacherList();
         }
       },
       fail: e => {
@@ -152,6 +163,28 @@ Page({
           title: '教练绑定失败',
           icon: 'none'
         })
+      }
+    })
+  },
+  addTask: function() {
+    API.addTask({
+      params: {
+        teacherCode: this.data.coaches[this.data.coachActive][1],
+        orderData: this.data.datesText.replace(/,/g, '#'),
+        classNo: this.data.classActive+'',
+        autoComment: this.data.autoComment?1:0,
+        content: this.data.comment
+      },
+      success: data => {
+        if(data.success) {
+          wx.showToast({
+            title: '任务添加成功',
+            icon: 'success'
+          })
+        }
+      },
+      fail: e => {
+        console.log(e);
       }
     })
   }

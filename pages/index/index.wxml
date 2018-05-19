@@ -18,18 +18,18 @@
   </view>
   <view class='form-group'>
     <label class='fg-label'>选择教练</label>
-    <picker wx:if="{{coachs.length}}" class='coach-picker' value='{{coachActive}}' range='{{coachs}}' bindchange="changeClass">
-      <view>{{coachs[coachActive]}}</view>
+    <picker wx:if="{{coaches.length}}" class='coach-picker' range-key='0' value='{{coachActive}}' range='{{coaches}}' bindchange="changeCoach">
+      <view>{{coaches[coachActive][0]}}</view>
     </picker>
     <view class='none-coach' wx:else>请先绑定教练</view>
   </view>
   <view class='form-group clearfix'>
     <label class='fg-label'>自动评论</label>
     <switch checked='{{autoComment}}' bindchange='changeAuto'></switch>
-    <textarea class="comment-area {{autoComment?'':'comment-area-hidden'}}" value="{{comment}}" placeholder='请输入自动评论内容...'></textarea>
+    <textarea class="comment-area {{autoComment?'':'comment-area-hidden'}}" bindinput='commentInput' value="{{comment}}" placeholder='请输入自动评论内容...'></textarea>
   </view>
   <view class='form-group'>
-    <button type='primary'>提交</button>
+    <button type='primary' bindtap='addTask'>提交</button>
   </view>
   <view class="dates-panel {{showDatePanel ? 'dates-panel-show': 'dates-panel-hidden'}}">
     <view class='dates-panel-wrap'>

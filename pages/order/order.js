@@ -16,9 +16,8 @@ Page({
             item.orderData = item.orderData.replace(/#/g, ',');
             return item;
           })
-          console.log(list)
           this.setData({
-            list: list
+            list: list.reverse()
           })
         }
       },
@@ -45,7 +44,7 @@ Page({
       url: '/pages/orderLog/orderLog',
     })
   },
-  onLoad: function() {
+  onShow: function() {
     this.getOrderList()
   }
 })

@@ -1,5 +1,6 @@
 
 const HXC = require('../../utils/global.js')
+const API = require('../../api/index.js')
 
 // pages/orderEdit/orderEdit.js
 Page({
@@ -23,12 +24,12 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onShow: function () {
     this.setData({
       initData: HXC.getData('editOrder')
     })
     this.initDataHandle(this.data.initData)
-    console.log(this.data)
+    this.getTeacherList();
   },
 
   initDataHandle: function(data) {
@@ -45,13 +46,42 @@ Page({
       dates: dates,
       dateText: data.orderData,
       autoComment: !!data.autoComment,
-      comment: data.content
+      comment: data.content,
+      id: data.id
+    })
+  },
+  getTeacherList: function () {
+    API.getTeacherList({
+      success: data => {
+        let c = [];
+        data.data.forEach(item => {
+          c.push([item.teacherName, item.teacherCode])
+        })
+        this.setData({
+          coaches: c,
+          coachActive: c.findIndex(item => item[1] === this.data.initData.teacherCode)
+        })
+        console.log(this.data)
+      },
+      fail: e => {
+
+      }
     })
   },
 
   changeClass: function(e) {
     this.setData({
       classActive: e.detail.value
+    })
+  },
+  changeCoach: function (e) {
+    this.setData({
+      coachActive: e.detail.value
+    })
+  },
+  commentInput: function(e) {
+    this.setData({
+      comment: e.detail.value
     })
   },
   checkboxChange: function (e) {
@@ -79,13 +109,64 @@ Page({
       autoComment: e.detail.value
     })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-  
+  deleteTask: function() {
+    API.deleteTask({
+      params: {
+        taskId: this.data.id
+      },
+      success: data => {
+        if(data.success){
+          wx.showToast({
+            title: '任务删除成功',
+            icon: 'success'
+          })
+          setTimeout(() => {
+            wx.switchTab({
+              url: '/pages/order/order',
+            })
+          }, 1500)
+        } else {
+          wx.showToast({
+            title: '任务删除失败',
+            icon: 'none'
+          })
+        }
+      },
+      fail: e => {
+        wx.showToast({
+          title: '任务删除失败',
+          icon: 'none'
+        })
+      }
+    })
   },
+  saveTask: function() {
+    API.addTask({
+      params: {
+        teacherCode: this.data.coaches[this.data.coachActive][1],
+        orderData: this.data.dateText.replace(/,/g, '#'),
+        classNo: this.data.classActive + '',
+        autoComment: this.data.autoComment ? 1 : 0,
+        content: this.data.comment,
+        taskId: this.data.id
+      },
+      success: data => {
+        if (data.success) {
+          wx.showToast({
+            title: '任务修改成功',
+            icon: 'success'
+          })
+        }
+      },
+      fail: e => {
+        wx.showToast({
+          title: '任务修改失败',
+          icon: 'none'
+        })
+      }
+    })
+  },
+
 
   /**
    * 生命周期函数--监听页面隐藏

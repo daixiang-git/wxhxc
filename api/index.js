@@ -162,12 +162,33 @@ export function getTeacherList(config = {}) {
   })
 }
 
-//提交
+//提交任务
 const ADD_UPDATE_TASK='/user/edit/task'
 export function addTask(config = {}) {
   let header = _getHeaderIds();
   wx.request({
-    url: API_HOST + ADD_TEACHER,
+    url: API_HOST + ADD_UPDATE_TASK,
+    header,
+    data: config.params,
+    method: 'POST',
+    success: function (res) {
+      config.success && config.success(res.data)
+    },
+    fail: function (e) {
+      config.fail && config.fail(e);
+    },
+    complete: function (data) {
+      config.complete && config.complete(data);
+    }
+  })
+}
+
+//删除任务
+const DELETE_TASK = '/user/delete/task'
+export function deleteTask(config = {}) {
+  let header = _getHeaderIds();
+  wx.request({
+    url: API_HOST + DELETE_TASK,
     header,
     data: config.params,
     method: 'POST',

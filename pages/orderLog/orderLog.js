@@ -24,6 +24,7 @@ Page({
       },
       success: data => {
         let list = data.data.orderLogVOList;
+        if(!list) return;
         list = list.map(item => {
           item.classTime = this.data.classHours[item.classNo];
           item.orderText = item.orderState ? '成功' : '失败';
@@ -67,17 +68,17 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.setData({
-      logId: HXC.getData('logId')
-    })
-    this.getOrderLog();
+    
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    this.setData({
+      logId: HXC.getData('logId')
+    })
+    this.getOrderLog();
   },
 
   /**

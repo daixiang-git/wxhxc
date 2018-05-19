@@ -1,12 +1,12 @@
 <view class="edit-container">
   <view class='edit-header'>
-    <text class='delete-btn'>删除</text>
-    <text class='save-btn'>保存</text>
+    <text class='delete-btn' bindtap='deleteTask'>删除</text>
+    <text class='save-btn' bindtap="saveTask">保存</text>
   </view>
   <view class='edit-group clearfix'>
     <label>教练名：</label>
-    <picker>
-      <view>{{initData.teacherName}}</view>
+    <picker range-key='0' value='{{coachActive}}' range='{{coaches}}' bindchange="changeCoach">
+      <view>{{coaches[coachActive][0]}}</view>
     </picker>
   </view>
   <view class='edit-group clearfix'>
@@ -23,7 +23,7 @@
   <view class='edit-group clearfix'>
     <label>自动评论</label>
     <switch checked='{{autoComment}}' bindchange='changeAuto'></switch>
-    <textarea class="comment-area {{autoComment?'':'comment-area-hidden'}}" value="{{comment}}" placeholder='请输入自动评论内容...'></textarea>
+    <textarea class="comment-area {{autoComment?'':'comment-area-hidden'}}" bindinput='commentInput' value="{{comment}}" placeholder='请输入自动评论内容...'></textarea>
   </view>
   <view class="dates-panel {{showDatePanel ? 'dates-panel-show': 'dates-panel-hidden'}}">
     <view class='dates-panel-wrap'>

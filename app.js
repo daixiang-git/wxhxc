@@ -40,7 +40,7 @@ App({
           // })
         } else {
           wx.switchTab({
-            url: '/pages/index/index',
+            url: '/pages/index/index'
           })
         }
       },
@@ -68,9 +68,9 @@ App({
               API.setData('openId', ids[1]);
               typeof cb === 'function' && cb();
             } else {
-              wx.navigateTo({
-                url: '/pages/login/login',
-              })
+              // wx.navigateTo({
+              //   url: '/pages/login/login',
+              // })
             }
           },
           fail: e => {
