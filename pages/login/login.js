@@ -27,7 +27,7 @@ Page({
     })
   },
   // 获取输入邮箱 
-  passwordInput: function (e) {
+  emailInput: function (e) {
     this.setData({
       email: e.detail.value
     })
@@ -50,10 +50,17 @@ Page({
           email: this.data.email
         },
         success: data => {
-          console.log(data)
-          // wx.switchTab({
-          //   url: '/pages/index/index',
-          // })
+          if(data.success) {
+            wx.switchTab({
+              url: '/pages/index/index',
+            })
+          } else{
+            wx.showToast({
+              title: '绑定失败',
+              icon: 'none'
+            })
+          }
+          
         },
         fail: e => {
           console.log('err', e)

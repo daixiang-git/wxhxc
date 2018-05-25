@@ -126,7 +126,7 @@ const ADD_TEACHER="/user/auth/teacher"
 export function addTeacher(config = {}) {
   let header = _getHeaderIds();
   wx.request({
-    url: API_HOST + ADD_TEACHER,
+    url: API_HOST + ADD_TEACHER + '?teacherName=' + config.params.teacherName,
     header,
     data: config.params,
     method: 'POST',
@@ -188,9 +188,8 @@ const DELETE_TASK = '/user/delete/task'
 export function deleteTask(config = {}) {
   let header = _getHeaderIds();
   wx.request({
-    url: API_HOST + DELETE_TASK,
+    url: API_HOST + DELETE_TASK+'?taskId='+config.params.taskId,
     header,
-    data: config.params,
     method: 'POST',
     success: function (res) {
       config.success && config.success(res.data)
